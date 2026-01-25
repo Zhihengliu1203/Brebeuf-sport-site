@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="fr-CA">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plateforme Sport — Collège Jean-de-Brébeuf</title>
+  <meta name="description" content="Une plateforme pour rassembler la communauté de Brébeuf, trouver des activités sportives, rejoindre des groupes et réduire les coûts de terrains." />
+  <style>
+    :root{
+  --header-offset: 60px; /* ajuste selon la hauteur réelle de ton header */
+}
+html{
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-offset);
+}
+
+/* Quand on scroll vers un #id, on laisse un espace en haut */
+section[id]{
+  scroll-margin-top: var(--header-offset);
+}
+
+    :root{
+      --bg:#0b0f17;
+      --card:#101827;
+      --text:#e7eefc;
+      --muted:#b7c4dd;
+      --line:#22304a;
+      --accent:#6aa9ff;
+      --accent2:#7cffc7;
+      --warn:#ffd36a;
+      --radius:18px;
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
+      --max: 1100px;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(106,169,255,.22), transparent 55%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(124,255,199,.16), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      line-height:1.5;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 22px; }
+    header{
+      position: sticky; top: 0;
+      backdrop-filter: blur(10px);
+      background: rgba(11,15,23,.55);
+      border-bottom: 1px solid rgba(34,48,74,.6);
+      z-index: 20;
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 16px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; font-weight:700;
+      letter-spacing:.2px;
+    }
+    .dot{
+      width:12px; height:12px; border-radius:999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 4px rgba(106,169,255,.12);
+    }
+    nav{
+      display:flex; gap:14px; flex-wrap:wrap; align-items:center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    nav a{ padding:8px 10px; border-radius:999px; }
+    nav a:hover{ background: rgba(255,255,255,.06); color: var(--text); }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 12px 14px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      gap:10px;
+      font-weight: 650;
+    }
+    .btn:hover{ transform: translateY(-1px); transition: .15s ease; background: rgba(255,255,255,.09); }
+    .btn.primary{
+      border: none;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color:#07101c;
+      box-shadow: 0 14px 26px rgba(106,169,255,.18);
+    }
+    .btn.primary:hover{ filter: brightness(1.03); }
+    .hero{
+      padding: 44px 0 18px;
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .card{
+      background: rgba(16,24,39,.78);
+      border: 1px solid rgba(34,48,74,.85);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero .left{ padding: 28px; }
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 8px 12px;
+      border-radius:999px;
+      background: rgba(106,169,255,.12);
+      border: 1px solid rgba(106,169,255,.25);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    h1{ margin: 14px 0 10px; font-size: 42px; line-height: 1.08; }
+    .sub{ color: var(--muted); font-size: 16px; max-width: 62ch; }
+    .cta{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 18px; }
+    .hero .right{
+      padding: 22px;
+      display:flex; flex-direction:column; gap:12px;
+    }
+    .stat{
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+    }
+    .stat b{ display:block; font-size: 18px; }
+    .stat span{ color: var(--muted); font-size: 13px; }
+    section{ padding: 26px 0; }
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .box{ padding: 18px; }
+    h2{ margin: 0 0 10px; font-size: 24px; }
+    p{ margin: 0; color: var(--muted); }
+    ul{ margin: 10px 0 0 18px; color: var(--muted); }
+    li{ margin: 6px 0; }
+    .pill{
+      display:inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-size: 12px;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+    .pricing{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .price{
+      padding: 18px;
+    }
+    .price h3{ margin: 0 0 6px; font-size: 18px; }
+    .tag{
+      display:inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,211,106,.10);
+      border: 1px solid rgba(255,211,106,.22);
+      color: var(--warn);
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    form{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    input{
+      flex: 1 1 240px;
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      outline: none;
+    }
+    input::placeholder{ color: rgba(183,196,221,.75); }
+    footer{
+      padding: 26px 0 36px;
+      border-top: 1px solid rgba(34,48,74,.65);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .small{ font-size: 13px; color: var(--muted); }
+    @media (max-width: 920px){
+      .hero{ grid-template-columns: 1fr; }
+      .grid3{ grid-template-columns: 1fr; }
+      .grid2{ grid-template-columns: 1fr; }
+      .pricing{ grid-template-columns: 1fr; }
+      h1{ font-size: 36px; }
+      nav{ display:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="dot"></div>
+        <div>Plateforme Sport • Brébeuf</div>
+      </div>
+      <nav>
+        <a href="#probleme">Problème</a>
+        <a href="#solution">Solution</a>
+        <a href="#fonctionnalites">Fonctionnalités</a>
+        <a href="#tarifs">Tarifs</a>
+        <a href="#equipe">Équipe</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="btn primary" href="#contact">Rejoindre la liste d’attente</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <div class="card left">
+        <div class="kicker">🏀⚽🏐 Basket • Soccer • Volley • +</div>
+        <h1>Jouer plus. Payer moins. Rencontrer du monde.</h1>
+        <p class="sub">
+          Une plateforme pour rassembler la communauté du Collège Jean-de-Brébeuf,
+          trouver des activités sportives, rejoindre des groupes et réduire les coûts de location de terrains.
+        </p>
+        <div class="cta">
+          <a class="btn primary" href="#contact">Rejoindre la liste d’attente</a>
+          <a class="btn" href="#tarifs">Voir le modèle de prix</a>
+          <a class="btn" href="#contact">Instagram</a>
+        </div>
+        
+      </div>
+
+      <div class="card right">
+        <div class="stat">
+          <b>🎯 Pour qui ?</b>
+          <span>La communauté du Collège Jean-de-Brébeuf</span>
+        </div>
+        <div class="stat">
+          <b>💡 Valeur</b>
+          <span>Coûts divisés + groupes faciles à rejoindre + socialisation</span>
+        </div>
+        
+        </div>
+      </div>
+    </div>
+
+    <section id="probleme">
+      <div class="card box">
+        <h2>Le problème</h2>
+        <p>
+          Réserver un terrain est souvent <b>cher</b> et <b>difficile</b>, surtout si tu es seul.
+          Les disponibilités limitées découragent plusieurs étudiants de pratiquer plus souvent ou d’essayer de nouveaux sports.
+        </p>
+      </div>
+    </section>
+
+    <section id="solution" class="grid2">
+      <div class="card box">
+        <h2>Notre solution</h2>
+        <p>
+          On crée une plateforme qui connecte <b>les gens</b>, <b>les horaires</b>,  et <b>les terrains</b>
+          pour faciliter <b>votre </b> accès aux activités sportives à <b>faible coût. </b>
+        </p>
+        
+      </div>
+      <div class="card box">
+        <h2>Comment ça marche</h2>
+        <ul>
+          <li><b>Choisis</b> un sport / une activité et un horaire</li>
+          <li><b>Rejoins</b> un groupe (ou crée-en un)</li>
+          <li><b>Réserve & joue</b> 
+        </ul>
+      </div>
+    </section>
+
+    <section id="fonctionnalites">
+      <h2 style="margin-bottom:12px;">Fonctionnalités (MVP)</h2>
+      <div class="grid3">
+        <div class="card box">
+          <h2>Trouver des joueurs</h2>
+          <p>Trouver un groupe quand tu es seul, selon sport, niveau et horaire.</p>
+        </div>
+        <div class="card box">
+          <h2>Calendrier</h2>
+          <p>Voir les créneaux et activités disponibles, au même endroit.</p>
+        </div>
+        <div class="card box">
+          <h2>Réservation & coûts</h2>
+          <p>Prix transparent + partage des frais.</p>
+        </div>
+      </div>
+      
+    </section>
+
+    <section id="tarifs">
+      <h2 style="margin-bottom:12px;">Tarifs</h2>
+      <div class="pricing">
+        <div class="card price">
+          <div class="tag">Option 1</div>
+          <h3>Paiement par activité</h3>
+          <p> Nous retirerons 10% de frais de coordination.</p>
+          <p> <b> Avantages : </b> Organiser vos activités telles que vous souhaitez.</p>
+        </div>
+        <div class="card price">
+          <div class="tag">Option 2</div>
+          <h3>Membership (abonnement)</h3>
+          <ul>
+            <li>Priorité sur certaines réservations</li>
+            <li>Accès à des “Members’ hours”</li>
+            <li>Récompenses et tarifs préférentiels</li>
+          </ul>
+        </div>
+      </div>
+    
+    </section>
+
+    <section id="equipe" class="grid2">
+      <div class="card box">
+        <h2>Rencontrer notre équipe</h2>
+        <ul>
+        ...
+        </ul>
+     
+     
+        
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="card box">
+        <h2>FAQ</h2>
+        <ul>
+          <li><b>Est-ce réservé aux sportifs élites ?</b> Non, c’est pour toute la communauté.</li>
+          <li><b>Comment vous contacter ?</b> Instagram + formulaire ci-dessous.</li>
+          
+        </ul>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="card box">
+        <h2>Rejoindre la liste d’attente</h2>
+        <p>
+          Laisse ton email pour être informé du lancement et des premières activités.
+        </p>
+
+        <!-- Remplace l’action par un outil de formulaire (Google Forms, Formspree, etc.) si tu veux collecter les emails -->
+        <form onsubmit="return handleSubmit(event)">
+          <input id="email" type="email" placeholder="Ton email (ex. prenom.nom@…)" required />
+          <button class="btn primary" type="submit">Je m’inscris</button>
+          <a class="btn" href="#" aria-label="Instagram">Instagram</a>
+        </form>
+
+        <p class="small" id="msg" style="margin-top:10px;"></p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap" style="padding:0;">
+        <div>© <span id="year"></span> Plateforme Sport • Projet étudiant — Collège Jean-de-Brébeuf</div>
+        <div class="small" style="margin-top:6px;">
+          Conditions d’utilisation • Politique de confidentialité.
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function handleSubmit(e){
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const msg = document.getElementById("msg");
+
+      // MVP simple : message + stockage local (pas de serveur)
+      if(!email){
+        msg.textContent = "Veuillez entrer un email valide.";
+        return false;
+      }
+      const list = JSON.parse(localStorage.getItem("waitlist_emails") || "[]");
+      if(!list.includes(email)) list.push(email);
+      localStorage.setItem("waitlist_emails", JSON.stringify(list));
+
+      msg.textContent = "Merci ! Tu es sur la liste d’attente ✅";
+      document.getElementById("email").value = "";
+      return false;
+    }
+  </script>
+</body>
+</html>
+
