@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Rejoindre un groupe — Plateforme Sport</title>
-  <meta name="description" content="Rejoindre ou créer des groupes sportifs, filtrer, liste d’attente, coût par personne, chat." />
+  <meta name="description" content="Rejoindre ou créer des groupes sportifs, filtrer, coût par personne, chat." />
 
   <style>
     :root{
@@ -21,7 +21,15 @@
       --radius:18px;
       --shadow: 0 12px 30px rgba(0,0,0,.35);
       --max: 1100px;
+
+      /* dropdown theme */
+      --select-bg: rgba(255,255,255,.06);
+      --select-bg-strong: rgba(255,255,255,.09);
+      --select-border: rgba(255,255,255,.14);
+      --option-bg: #0f172a;   /* dark option background */
+      --option-text: #e7eefc; /* option text */
     }
+
     *{ box-sizing:border-box; }
     body{
       margin:0;
@@ -31,7 +39,9 @@
                   var(--bg);
       color: var(--text);
       line-height:1.5;
+      text-align:left;
     }
+
     a{ color:inherit; text-decoration:none; }
     .wrap{ max-width: var(--max); margin: 0 auto; padding: 22px; }
 
@@ -92,6 +102,7 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
+
     .top{
       padding: 18px;
       display:flex;
@@ -122,42 +133,55 @@
       display:flex; gap:10px; flex-wrap:wrap; align-items:center;
     }
 
-/* Inputs + selects */
-.input, select, textarea{
-  flex: 1 1 220px;
-  padding: 12px 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,.14);
-  background: rgba(255,255,255,.06);
-  color: var(--text);
-  outline: none;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: .2px;
-}
+    /* Inputs + selects */
+    .input, select, textarea{
+      flex: 1 1 220px;
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--select-border);
+      background: var(--select-bg);
+      color: var(--text);
+      outline: none;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
 
-/* Dropdown lisible (options visibles) */
-:root{ color-scheme: dark; }
+    .input::placeholder, textarea::placeholder{
+      color: rgba(183,196,221,.6);
+      font-weight: 700;
+    }
 
-select{
-  color: var(--text);
-  background-color: rgba(255,255,255,.08);
-}
+    /* MAKE SELECT MATCH THEME */
+    :root{ color-scheme: dark; }
 
-select option{
-  color: #0b0f17;
-  background: #ffffff;
-  font-weight: 700;
-}
+    select{
+      appearance:none;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+      background-color: var(--select-bg-strong);
+      padding-right: 44px;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%23b7c4dd' d='M5.5 7.5a1 1 0 0 1 1.4 0L10 10.6l3.1-3.1a1 1 0 1 1 1.4 1.4l-3.8 3.8a1 1 0 0 1-1.4 0L5.5 8.9a1 1 0 0 1 0-1.4Z'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;
+      background-position:right 12px center;
+      background-size:18px 18px;
+    }
+    select:focus, .input:focus, textarea:focus{
+      border-color: rgba(106,169,255,.55);
+      box-shadow: 0 0 0 4px rgba(106,169,255,.12);
+    }
 
-select option:checked{
-  background: #dbeafe;
-  color: #0b0f17;
-}
-
+    /* Dropdown list options (best effort – works in many browsers) */
+    select option{
+      background: var(--option-bg);
+      color: var(--option-text);
+      font-weight: 700;
+    }
 
     textarea{ min-height: 90px; resize: vertical; }
     .hint{ color: var(--muted); font-size: 13px; }
+
     .pill{
       display:inline-flex;
       padding: 6px 10px;
@@ -173,14 +197,9 @@ select option:checked{
     .pill.warn{ border-color: rgba(255,211,106,.22); background: rgba(255,211,106,.08); color: #fff2d0; }
     .pill.bad{ border-color: rgba(255,106,106,.22); background: rgba(255,106,106,.08); color: #ffd6d6; }
 
-    .list{
-      display:flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .group{
-      padding: 14px 16px;
-    }
+    .list{ display:flex; flex-direction: column; gap: 12px; }
+    .group{ padding: 14px 16px; }
+
     .groupHead{
       display:flex;
       justify-content: space-between;
@@ -228,6 +247,7 @@ select option:checked{
       list-style: none;
     }
     summary::-webkit-details-marker{ display:none; }
+
     .detailGrid{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -242,17 +262,14 @@ select option:checked{
     }
     .box h3{ margin:0 0 6px; font-size: 14px; }
     .box p{ margin:0; color: var(--muted); font-size: 13px; }
+
     .link{
       color: var(--text);
       text-decoration: underline;
       text-underline-offset: 3px;
     }
 
-    .chat{
-      display:flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .chat{ display:flex; flex-direction: column; gap: 8px; }
     .chatLog{
       max-height: 170px;
       overflow:auto;
@@ -261,12 +278,9 @@ select option:checked{
       background: rgba(255,255,255,.03);
       padding: 10px;
     }
-    .msg{
-      margin: 0 0 8px;
-      color: var(--muted);
-      font-size: 13px;
-    }
+    .msg{ margin: 0 0 8px; color: var(--muted); font-size: 13px; }
     .msg b{ color: var(--text); }
+
     .toast{
       position: fixed;
       left: 50%;
@@ -322,24 +336,25 @@ select option:checked{
           <h1>Rejoindre un groupe</h1>
           <div class="sub">
             Trouve un groupe (filtre + recherche), rejoins en 1 clic, ou crée le tien.
-            Inclus : <b>liste d’attente</b>, <b>coût par personne</b>, <b>confirmation</b> (quand assez de participants), mini <b>chat</b> et <b>partage</b>.
+            Inclus : <b>coût par personne</b>, <b>confirmation</b> (quand assez de participants), mini <b>chat</b> et <b>partage</b>.
           </div>
         </div>
-        <div class="row" style="align-items:flex-start;">
-  <div style="min-width:280px">
-    <div class="hint" style="margin-bottom:6px;">Ton prénom (affiché dans les groupes)</div>
-    <input id="displayName" class="input" placeholder="Ex. Alex" />
-    <div class="row" style="margin-top:8px;">
-      <label class="pill" style="cursor:pointer;">
-        <input id="reminders" type="checkbox" style="accent-color: var(--accent);">
-        Activer “rappels”
-      </label>
-      <span class="pill ok" id="reliability">Fiabilité: 100</span>
-    </div>
-  </div>
-</div> 
-</div> 
 
+        <!-- RIGHT PANEL -->
+        <div class="row" style="align-items:flex-start;">
+          <div style="min-width:280px">
+            <div class="hint" style="margin-bottom:6px;">Ton prénom (affiché dans les groupes)</div>
+            <input id="displayName" class="input" placeholder="Ex. Alex" />
+            <div class="row" style="margin-top:8px;">
+              <label class="pill" style="cursor:pointer;">
+                <input id="reminders" type="checkbox" style="accent-color: var(--accent);">
+                Activer “rappels”
+              </label>
+              <span class="pill ok" id="reliability">Fiabilité: 100</span>
+            </div>
+          </div>
+        </div>
+      </div><!-- /top -->
 
       <div class="toolbar">
         <div class="row">
@@ -400,11 +415,8 @@ select option:checked{
           <button class="btn small" id="reset">Reset filtres</button>
           <button class="btn small danger" id="wipe">Effacer démo</button>
         </div>
-
-        
-       
-      </div>
-    </div>
+      </div><!-- /toolbar -->
+    </div><!-- /card -->
 
     <div class="grid">
       <!-- LIST -->
@@ -487,23 +499,26 @@ select option:checked{
           <button class="btn small" id="seed">Ajouter démos</button>
         </div>
 
-        
+        <div style="margin-top:16px; border-top:1px solid rgba(255,255,255,.08); padding-top:14px;">
+          <div class="gtitle">Mes groupes</div>
+          <div class="hint" style="margin-top:6px;">(MVP) Affiché depuis ton navigateur.</div>
+          <div id="myGroups" style="margin-top:10px; display:flex; flex-direction:column; gap:10px;"></div>
+        </div>
       </aside>
     </div>
 
-  
+    <footer>
+      <div>⚙️ MVP : tout est local (localStorage). Pour une vraie plateforme : backend + comptes + notifications.</div>
+    </footer>
   </main>
 
   <div class="toast" id="toast"></div>
 
   <script>
-    // -------------------------
-    // Storage helpers
-    // -------------------------
     const KEY = "brebeuf_groups_v1";
     const USERKEY = "brebeuf_user_v1";
     const REMKEY = "brebeuf_reminders_v1";
-    const RELKEY = "brebeuf_reliability_v1"; // { noShow: number }
+    const RELKEY = "brebeuf_reliability_v1";
 
     const $ = (id) => document.getElementById(id);
 
@@ -525,17 +540,10 @@ select option:checked{
       try { return JSON.parse(localStorage.getItem(RELKEY) || '{"noShow":0}'); }
       catch { return { noShow: 0 }; }
     }
-    function saveReliability(r){
-      localStorage.setItem(RELKEY, JSON.stringify(r));
-    }
-
     function uid(){
       return Math.random().toString(16).slice(2) + Date.now().toString(16);
     }
 
-    // -------------------------
-    // UI helpers
-    // -------------------------
     let toastTimer = null;
     function toast(msg){
       const t = $("toast");
@@ -575,12 +583,10 @@ select option:checked{
       return { confirmed, full, joined, max, threshold };
     }
 
-    // -------------------------
-    // Seed demo data
-    // -------------------------
     function seedIfEmpty(){
       const groups = loadGroups();
       if(groups.length) return;
+
       const demo = [
         {
           id: uid(),
@@ -600,9 +606,7 @@ select option:checked{
           owner: "Admin",
           participants: ["Admin", "Kaeli"],
           waitlist: ["Jake"],
-          chat: [
-            { by: "Admin", text: "Salut! Dites votre niveau et si vous avez une raquette.", ts: Date.now()-600000 }
-          ],
+          chat: [{ by: "Admin", text: "Salut! Dites votre niveau et si vous avez une raquette.", ts: Date.now()-600000 }],
           createdAt: Date.now()-7200000
         },
         {
@@ -651,176 +655,18 @@ select option:checked{
       saveGroups(demo);
     }
 
-    // -------------------------
-    // Render
-    // -------------------------
-    function render(){
-      const groups = loadGroups();
-      const user = loadUser();
-      const name = (user.name || "").trim();
-
-      // Filters
-      const q = $("q").value.trim().toLowerCase();
-      const fSport = $("sport").value;
-      const fNiv = $("niveau").value;
-      const fLieu = $("lieu").value;
-      const fJour = $("jour").value;
-      const fStatut = $("statut").value;
-      const fPrix = $("prix").value;
-
-      const filtered = groups.filter(g => {
-        const blob = `${g.title} ${g.sport} ${g.niveau} ${g.lieu} ${g.jour} ${g.heure} ${g.notes} ${g.source}`.toLowerCase();
-        if(q && !blob.includes(q)) return false;
-        if(fSport && g.sport !== fSport) return false;
-        if(fNiv && g.niveau !== fNiv) return false;
-        if(fLieu && g.lieu !== fLieu) return false;
-        if(fJour && g.jour !== fJour) return false;
-
-        // price per person filter
-        const per = calcPerPerson(g.costTotal, g.feePerPerson, g.max);
-        if(fPrix && per != null){
-          const [a,b] = fPrix.split("-").map(Number);
-          if(!(per >= a && per < b)) return false;
-        } else if (fPrix) {
-          return false;
-        }
-
-        // status filter
-        const st = statusOf(g);
-        if(fStatut === "open" && (st.full || st.confirmed && st.full)) return st.joined < st.max;
-        if(fStatut === "full" && !st.full) return false;
-        if(fStatut === "confirmed" && !st.confirmed) return false;
-
-        return true;
-      });
-
-      $("count").textContent = `${filtered.length} groupe(s) affiché(s) • ${groups.length} total`;
-
-      // My groups
-      renderMyGroups(groups, name);
-
-      // List render
-      const container = $("groups");
-      container.innerHTML = filtered.length ? "" : `
-        <div class="card group">
-          <div class="gtitle">Aucun groupe trouvé</div>
-          <div class="hint" style="margin-top:6px;">Essaie un autre filtre, ou crée un groupe à droite.</div>
-        </div>
-      `;
-
-      for(const g of filtered){
-        const st = statusOf(g);
-        const per = calcPerPerson(g.costTotal, g.feePerPerson, g.max);
-        const isIn = name && (g.participants || []).includes(name);
-        const isWait = name && (g.waitlist || []).includes(name);
-
-        let statusPill = `<span class="pill ok">Ouvert</span>`;
-        if(st.full) statusPill = `<span class="pill warn">Complet</span>`;
-        if(st.confirmed) statusPill = `<span class="pill">Confirmé</span>`;
-
-        const canJoin = !!name && !isIn && !isWait;
-        const joinBtn = !name
-          ? `<span class="pill bad">Entre ton prénom pour rejoindre</span>`
-          : isIn
-            ? `<button class="btn small danger" data-act="leave" data-id="${g.id}">Quitter</button>`
-            : (st.full
-                ? `<button class="btn small warn" data-act="wait" data-id="${g.id}">${isWait ? "Quitter attente" : "Liste d’attente"}</button>`
-                : `<button class="btn small primary" data-act="join" data-id="${g.id}">Rejoindre</button>`);
-
-        const shareText = `Groupe: ${g.title} | ${g.jour} ${g.heure} | Lieu: ${g.lieu} | Sport: ${g.sport} | Niveau: ${g.niveau}`;
-
-        const sourceLink = g.source
-          ? `<a class="link" href="${escapeHtml(g.source)}" target="_blank" rel="noopener">Source</a>`
-          : `<span style="color:rgba(183,196,221,.7)">—</span>`;
-
-        const html = `
-          <div class="card group">
-            <div class="groupHead">
-              <div>
-                <div class="titleLine">
-                  <span class="gtitle">${escapeHtml(g.title || `${g.sport} ${g.jour} ${g.heure}`)}</span>
-                  ${statusPill}
-                  <span class="pill">${escapeHtml(g.sport)}</span>
-                  <span class="pill">${escapeHtml(g.niveau)}</span>
-                  <span class="pill">${escapeHtml(g.lieu)}</span>
-                </div>
-                <div class="meta">
-                  <span>🗓️ ${escapeHtml(g.jour)} • 🕒 ${escapeHtml(g.heure)} • ⏱️ ${escapeHtml(g.dureeH)}h</span>
-                  <span>👥 ${st.joined}/${st.max} (confirmé à ${st.threshold})</span>
-                  <span>💰 ${per == null ? "—" : money(per)} / pers</span>
-                  <span>🔗 ${sourceLink}</span>
-                </div>
-              </div>
-
-              <div class="actions">
-                ${joinBtn}
-                <button class="btn small" data-act="share" data-id="${g.id}">Partager</button>
-              </div>
-            </div>
-
-            <details>
-              <summary>Voir détails + chat</summary>
-
-              <div class="detailGrid">
-                <div class="box">
-                  <h3>Notes / règles</h3>
-                  <p>${escapeHtml(g.notes || "—")}</p>
-                  <p style="margin-top:8px;">
-                    <span class="pill">Organisateur: ${escapeHtml(g.owner || "—")}</span>
-                    <span class="pill">Coût total: ${money(g.costTotal)} • Frais/pers: ${money(g.feePerPerson)}</span>
-                  </p>
-                </div>
-
-                <div class="box">
-                  <h3>Participants</h3>
-                  <p>
-                    ${escapeHtml((g.participants || []).join(", ") || "—")}
-                  </p>
-                  <p style="margin-top:8px;">
-                    <span class="pill warn">Attente: ${escapeHtml((g.waitlist || []).join(", ") || "—")}</span>
-                  </p>
-                </div>
-              </div>
-
-              <div class="box" style="margin-top:12px;">
-                <h3>Chat (mini)</h3>
-                <div class="chat">
-                  <div class="chatLog" id="log-${g.id}">
-                    ${renderChat(g.chat || [])}
-                  </div>
-                  <div class="row">
-                    <input class="input" id="msg-${g.id}" placeholder="Écrire un message…" />
-                    <button class="btn small" data-act="send" data-id="${g.id}">Envoyer</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="box" style="margin-top:12px;">
-                <h3>Partage (copie)</h3>
-                <p class="hint" style="margin-bottom:10px;">Copie ce texte pour Instagram/DM :</p>
-                <div class="row">
-                  <input class="input" value="${escapeHtml(shareText)}" readonly />
-                  <button class="btn small" data-act="copy" data-text="${escapeHtml(shareText)}">Copier</button>
-                </div>
-              </div>
-
-            </details>
-          </div>
-        `;
-        container.insertAdjacentHTML("beforeend", html);
-      }
-    }
-
     function renderChat(chat){
-      if(!chat.length) return `<p class="msg">Aucun message.</p>`;
+      if(!chat || !chat.length) return `<p class="msg">Aucun message.</p>`;
       return chat.slice(-40).map(m => {
         const when = new Date(m.ts || Date.now()).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
-        return `<p class="msg"><b>${escapeHtml(m.by || "?" )}</b> <span style="opacity:.7">(${when})</span> : ${escapeHtml(m.text || "")}</p>`;
+        return `<p class="msg"><b>${escapeHtml(m.by || "?")}</b> <span style="opacity:.7">(${when})</span> : ${escapeHtml(m.text || "")}</p>`;
       }).join("");
     }
 
     function renderMyGroups(groups, name){
       const box = $("myGroups");
+      if(!box) return;
+
       if(!name){
         box.innerHTML = `<div class="hint">Entre ton prénom pour voir tes groupes.</div>`;
         return;
@@ -848,9 +694,6 @@ select option:checked{
       }).join("");
     }
 
-    // -------------------------
-    // Actions
-    // -------------------------
     function getName(){
       const u = loadUser();
       return (u.name || "").trim();
@@ -859,6 +702,7 @@ select option:checked{
     function joinGroup(id){
       const name = getName();
       if(!name) return toast("Entre ton prénom d’abord.");
+
       const groups = loadGroups();
       const g = groups.find(x => x.id === id);
       if(!g) return;
@@ -882,7 +726,6 @@ select option:checked{
       saveGroups(groups);
       toast("✅ Rejoint !");
 
-      // auto-confirm message
       const st2 = statusOf(g);
       if(st2.confirmed){
         g.chat = g.chat || [];
@@ -895,6 +738,7 @@ select option:checked{
     function toggleWait(id){
       const name = getName();
       if(!name) return toast("Entre ton prénom d’abord.");
+
       const groups = loadGroups();
       const g = groups.find(x => x.id === id);
       if(!g) return;
@@ -917,6 +761,7 @@ select option:checked{
     function leaveGroup(id){
       const name = getName();
       if(!name) return toast("Entre ton prénom d’abord.");
+
       const groups = loadGroups();
       const g = groups.find(x => x.id === id);
       if(!g) return;
@@ -928,7 +773,6 @@ select option:checked{
       g.participants = g.participants.filter(p => p !== name);
       g.waitlist = g.waitlist.filter(p => p !== name);
 
-      // promote from waitlist if slot open
       const st = statusOf(g);
       if(!st.full && g.waitlist.length > 0){
         const next = g.waitlist.shift();
@@ -956,6 +800,7 @@ select option:checked{
     function sendMessage(id){
       const name = getName();
       if(!name) return toast("Entre ton prénom d’abord.");
+
       const input = $("msg-" + id);
       if(!input) return;
       const text = input.value.trim();
@@ -970,7 +815,6 @@ select option:checked{
       saveGroups(groups);
       input.value = "";
       render();
-      // keep details open? (simple)
       toast("Message envoyé.");
     }
 
@@ -978,6 +822,7 @@ select option:checked{
       const groups = loadGroups();
       const g = groups.find(x => x.id === id);
       if(!g) return;
+
       const text = `Groupe: ${g.title} | ${g.jour} ${g.heure} | Lieu: ${g.lieu} | Sport: ${g.sport} | Niveau: ${g.niveau}`;
       copyText(text);
     }
@@ -1041,7 +886,6 @@ select option:checked{
       groups.unshift(g);
       saveGroups(groups);
 
-      // clear form
       $("title").value = "";
       $("cHeure").value = "";
       $("cDuree").value = "";
@@ -1054,9 +898,6 @@ select option:checked{
       render();
     }
 
-    // -------------------------
-    // Init
-    // -------------------------
     function syncUserUI(){
       const u = loadUser();
       $("displayName").value = u.name || "";
@@ -1068,12 +909,159 @@ select option:checked{
       $("reliability").textContent = "Fiabilité: " + score;
     }
 
+    function render(){
+      const groups = loadGroups();
+      const user = loadUser();
+      const name = (user.name || "").trim();
+
+      const q = $("q").value.trim().toLowerCase();
+      const fSport = $("sport").value;
+      const fNiv = $("niveau").value;
+      const fLieu = $("lieu").value;
+      const fJour = $("jour").value;
+      const fStatut = $("statut").value;
+      const fPrix = $("prix").value;
+
+      const filtered = groups.filter(g => {
+        const blob = `${g.title} ${g.sport} ${g.niveau} ${g.lieu} ${g.jour} ${g.heure} ${g.notes} ${g.source}`.toLowerCase();
+        if(q && !blob.includes(q)) return false;
+        if(fSport && g.sport !== fSport) return false;
+        if(fNiv && g.niveau !== fNiv) return false;
+        if(fLieu && g.lieu !== fLieu) return false;
+        if(fJour && g.jour !== fJour) return false;
+
+        const per = calcPerPerson(g.costTotal, g.feePerPerson, g.max);
+        if(fPrix && per != null){
+          const [a,b] = fPrix.split("-").map(Number);
+          if(!(per >= a && per < b)) return false;
+        } else if (fPrix) {
+          return false;
+        }
+
+        const st = statusOf(g);
+        if(fStatut === "open" && st.joined >= st.max) return false;
+        if(fStatut === "full" && !st.full) return false;
+        if(fStatut === "confirmed" && !st.confirmed) return false;
+
+        return true;
+      });
+
+      $("count").textContent = `${filtered.length} groupe(s) affiché(s) • ${groups.length} total`;
+
+      renderMyGroups(groups, name);
+
+      const container = $("groups");
+      container.innerHTML = filtered.length ? "" : `
+        <div class="card group">
+          <div class="gtitle">Aucun groupe trouvé</div>
+          <div class="hint" style="margin-top:6px;">Essaie un autre filtre, ou crée un groupe à droite.</div>
+        </div>
+      `;
+
+      for(const g of filtered){
+        const st = statusOf(g);
+        const per = calcPerPerson(g.costTotal, g.feePerPerson, g.max);
+        const isIn = name && (g.participants || []).includes(name);
+        const isWait = name && (g.waitlist || []).includes(name);
+
+        let statusPill = `<span class="pill ok">Ouvert</span>`;
+        if(st.full) statusPill = `<span class="pill warn">Complet</span>`;
+        if(st.confirmed) statusPill = `<span class="pill">Confirmé</span>`;
+
+        const joinBtn = !name
+          ? `<span class="pill bad">Entre ton prénom pour rejoindre</span>`
+          : isIn
+            ? `<button class="btn small danger" data-act="leave" data-id="${g.id}">Quitter</button>`
+            : (st.full
+                ? `<button class="btn small warn" data-act="wait" data-id="${g.id}">${isWait ? "Quitter attente" : "Liste d’attente"}</button>`
+                : `<button class="btn small primary" data-act="join" data-id="${g.id}">Rejoindre</button>`);
+
+        const shareText = `Groupe: ${g.title} | ${g.jour} ${g.heure} | Lieu: ${g.lieu} | Sport: ${g.sport} | Niveau: ${g.niveau}`;
+
+        const sourceLink = g.source
+          ? `<a class="link" href="${escapeHtml(g.source)}" target="_blank" rel="noopener">Source</a>`
+          : `<span style="color:rgba(183,196,221,.7)">—</span>`;
+
+        const html = `
+          <div class="card group">
+            <div class="groupHead">
+              <div>
+                <div class="titleLine">
+                  <span class="gtitle">${escapeHtml(g.title || `${g.sport} ${g.jour} ${g.heure}`)}</span>
+                  ${statusPill}
+                  <span class="pill">${escapeHtml(g.sport)}</span>
+                  <span class="pill">${escapeHtml(g.niveau)}</span>
+                  <span class="pill">${escapeHtml(g.lieu)}</span>
+                </div>
+                <div class="meta">
+                  <span>🗓️ ${escapeHtml(g.jour)} • 🕒 ${escapeHtml(g.heure)} • ⏱️ ${escapeHtml(g.dureeH)}h</span>
+                  <span>👥 ${st.joined}/${st.max} (confirmé à ${st.threshold})</span>
+                  <span>💰 ${per == null ? "—" : money(per)} / pers</span>
+                  <span>🔗 ${sourceLink}</span>
+                </div>
+              </div>
+
+              <div class="actions">
+                ${joinBtn}
+                <button class="btn small" data-act="share" data-id="${g.id}">Partager</button>
+              </div>
+            </div>
+
+            <details>
+              <summary>Voir détails + chat</summary>
+
+              <div class="detailGrid">
+                <div class="box">
+                  <h3>Notes / règles</h3>
+                  <p>${escapeHtml(g.notes || "—")}</p>
+                  <p style="margin-top:8px;">
+                    <span class="pill">Organisateur: ${escapeHtml(g.owner || "—")}</span>
+                    <span class="pill">Coût total: ${money(g.costTotal)} • Frais/pers: ${money(g.feePerPerson)}</span>
+                  </p>
+                </div>
+
+                <div class="box">
+                  <h3>Participants</h3>
+                  <p>${escapeHtml((g.participants || []).join(", ") || "—")}</p>
+                  <p style="margin-top:8px;">
+                    <span class="pill warn">Attente: ${escapeHtml((g.waitlist || []).join(", ") || "—")}</span>
+                  </p>
+                </div>
+              </div>
+
+              <div class="box" style="margin-top:12px;">
+                <h3>Chat (mini)</h3>
+                <div class="chat">
+                  <div class="chatLog" id="log-${g.id}">
+                    ${renderChat(g.chat || [])}
+                  </div>
+                  <div class="row">
+                    <input class="input" id="msg-${g.id}" placeholder="Écrire un message…" />
+                    <button class="btn small" data-act="send" data-id="${g.id}">Envoyer</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="box" style="margin-top:12px;">
+                <h3>Partage (copie)</h3>
+                <p class="hint" style="margin-bottom:10px;">Copie ce texte pour Instagram/DM :</p>
+                <div class="row">
+                  <input class="input" value="${escapeHtml(shareText)}" readonly />
+                  <button class="btn small" data-act="copy" data-text="${escapeHtml(shareText)}">Copier</button>
+                </div>
+              </div>
+            </details>
+          </div>
+        `;
+        container.insertAdjacentHTML("beforeend", html);
+      }
+    }
+
     function init(){
       seedIfEmpty();
       syncUserUI();
       render();
 
-      // inputs -> render
       ["q","sport","niveau","lieu","jour","statut","prix"].forEach(id => {
         $(id).addEventListener("input", render);
         $(id).addEventListener("change", render);
@@ -1102,10 +1090,10 @@ select option:checked{
         render();
       });
 
-      // delegated actions
       document.addEventListener("click", (e) => {
         const el = e.target.closest("[data-act]");
         if(!el) return;
+
         const act = el.getAttribute("data-act");
         const id = el.getAttribute("data-id");
 
