@@ -503,9 +503,7 @@ select option:checked{
       </aside>
     </div>
 
-    <footer>
-      <div>⚙️ MVP technique : tout est local (localStorage). Pour une vraie plateforme, il faudra un backend (auth, paiements, notifications).</div>
-    </footer>
+  
   </main>
 
   <div class="toast" id="toast"></div>
@@ -609,7 +607,7 @@ select option:checked{
           costTotal: 27,
           feePerPerson: 1.00,
           confirmThreshold: 0.7,
-          notes: "Raquettes requises. On se retrouve 10 min avant. rM/nrM selon votre statut.",
+          notes: "Raquettes requises. rM/nrM selon votre statut.",
           source: "https://montreal.ca/lieux/gymnase-double-du-complexe-sportif-claude-robillard",
           owner: "Admin",
           participants: ["Admin", "Kaeli"],
@@ -653,7 +651,7 @@ select option:checked{
           costTotal: 62.70,
           feePerPerson: 1.00,
           confirmThreshold: 0.7,
-          notes: "Objectif: former 2 équipes + mini match. Apportez des chaussures propres.",
+          notes: "Apportez des chaussures propres.",
           source: "https://complexesportif.bdeb.qc.ca/plateaux-sportifs-interieurs",
           owner: "Admin",
           participants: ["Admin","Lashwana","Zhiheng","Jake","Kaeli","Amina","Sam"],
@@ -806,7 +804,6 @@ select option:checked{
                     <input class="input" id="msg-${g.id}" placeholder="Écrire un message…" />
                     <button class="btn small" data-act="send" data-id="${g.id}">Envoyer</button>
                   </div>
-                  <div class="hint">MVP : chat local (pour démo). En vrai : serveur + comptes.</div>
                 </div>
               </div>
 
