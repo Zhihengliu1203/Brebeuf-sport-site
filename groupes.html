@@ -122,6 +122,7 @@
       display:flex; gap:10px; flex-wrap:wrap; align-items:center;
     }
 
+/* Inputs + selects */
 .input, select, textarea{
   flex: 1 1 220px;
   padding: 12px 12px;
@@ -131,44 +132,30 @@
   color: var(--text);
   outline: none;
   font-size: 14px;
-
-  /* NEW: lisibilité */
   font-weight: 700;
   letter-spacing: .2px;
 }
-      /* --- FIX dropdown lisible (select/options) --- */
-:root{
-  color-scheme: dark; /* force un rendu dark plus cohérent */
-}
+
+/* Dropdown lisible (options visibles) */
+:root{ color-scheme: dark; }
 
 select{
-  font-weight: 700;
-  letter-spacing: .2px;
   color: var(--text);
   background-color: rgba(255,255,255,.08);
 }
 
 select option{
-  color: #0b0f17;              /* texte foncé */
-  background: #ffffff;         /* fond blanc */
+  color: #0b0f17;
+  background: #ffffff;
   font-weight: 700;
 }
 
-/* option sélectionnée (certains navigateurs) */
 select option:checked{
-  background: #dbeafe;         /* bleu pâle lisible */
+  background: #dbeafe;
   color: #0b0f17;
 }
 
-      flex: 1 1 220px;
-      padding: 12px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      outline: none;
-      font-size: 14px;
-    }
+
     textarea{ min-height: 90px; resize: vertical; }
     .hint{ color: var(--muted); font-size: 13px; }
     .pill{
@@ -339,19 +326,20 @@ select option:checked{
           </div>
         </div>
         <div class="row" style="align-items:flex-start;">
-          <div style="min-width:280px">
-            <div class="hint" style="margin-bottom:6px;">Ton prénom (affiché dans les groupes)</div>
-            <input id="displayName" class="input" placeholder="Ex. Alex" />
-            <div class="row" style="margin-top:8px;">
-              <label class="pill" style="cursor:pointer;">
-                <input id="reminders" type="checkbox" style="accent-color: var(--accent);">
-                Activer “rappels”
-              </label>
-              <span class="pill ok" id="reliability">Fiabilité: 100</span>
-            </div>
-          </div>
-        
-      </div>
+  <div style="min-width:280px">
+    <div class="hint" style="margin-bottom:6px;">Ton prénom (affiché dans les groupes)</div>
+    <input id="displayName" class="input" placeholder="Ex. Alex" />
+    <div class="row" style="margin-top:8px;">
+      <label class="pill" style="cursor:pointer;">
+        <input id="reminders" type="checkbox" style="accent-color: var(--accent);">
+        Activer “rappels”
+      </label>
+      <span class="pill ok" id="reliability">Fiabilité: 100</span>
+    </div>
+  </div>
+</div> 
+</div> 
+
 
       <div class="toolbar">
         <div class="row">
