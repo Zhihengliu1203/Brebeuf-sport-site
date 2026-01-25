@@ -1,0 +1,1109 @@
+<!doctype html>
+<html lang="fr-CA">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rejoindre un groupe — Plateforme Sport</title>
+  <meta name="description" content="Rejoindre ou créer des groupes sportifs, filtrer, liste d’attente, coût par personne, chat." />
+
+  <style>
+    :root{
+      --bg:#0b0f17;
+      --card:#101827;
+      --text:#e7eefc;
+      --muted:#b7c4dd;
+      --line:#22304a;
+      --accent:#6aa9ff;
+      --accent2:#7cffc7;
+      --warn:#ffd36a;
+      --bad:#ff6a6a;
+      --ok:#7cffc7;
+      --radius:18px;
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
+      --max: 1100px;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(106,169,255,.22), transparent 55%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(124,255,199,.16), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      line-height:1.5;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 22px; }
+
+    header{
+      position: sticky; top: 0;
+      backdrop-filter: blur(10px);
+      background: rgba(11,15,23,.55);
+      border-bottom: 1px solid rgba(34,48,74,.6);
+      z-index: 20;
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 16px;
+    }
+    .brand{ display:flex; align-items:center; gap:10px; font-weight:800; }
+    .dot{
+      width:12px; height:12px; border-radius:999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 4px rgba(106,169,255,.12);
+    }
+    nav{ display:flex; gap:10px; flex-wrap:wrap; color: var(--muted); font-size: 14px; }
+    nav a{ padding:8px 10px; border-radius:999px; }
+    nav a:hover{ background: rgba(255,255,255,.06); color: var(--text); }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 10px 14px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      gap:10px;
+      font-weight: 700;
+      cursor: pointer;
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-1px); transition: .15s ease; background: rgba(255,255,255,.09); }
+    .btn.primary{
+      border: none;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color:#07101c;
+      box-shadow: 0 14px 26px rgba(106,169,255,.18);
+    }
+    .btn.warn{
+      border: none;
+      background: linear-gradient(135deg, #ffe08a, #ffd36a, #ffb703);
+      color:#1a1200;
+    }
+    .btn.danger{
+      border: 1px solid rgba(255,106,106,.35);
+      background: rgba(255,106,106,.10);
+      color: #ffd6d6;
+    }
+    .btn.small{ padding: 8px 12px; font-size: 13px; }
+
+    .card{
+      background: rgba(16,24,39,.78);
+      border: 1px solid rgba(34,48,74,.85);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .top{
+      padding: 18px;
+      display:flex;
+      gap: 14px;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    h1{ margin:0; font-size: 26px; }
+    .sub{ margin-top:6px; color: var(--muted); font-size: 14px; max-width: 75ch; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 14px;
+      margin-top: 14px;
+      align-items: start;
+    }
+
+    .toolbar{
+      padding: 14px 18px 18px;
+      border-top: 1px solid rgba(34,48,74,.65);
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .row{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    }
+
+    .input, select, textarea{
+      flex: 1 1 220px;
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      outline: none;
+      font-size: 14px;
+    }
+    textarea{ min-height: 90px; resize: vertical; }
+    .hint{ color: var(--muted); font-size: 13px; }
+    .pill{
+      display:inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-size: 12px;
+      gap: 6px;
+      align-items:center;
+    }
+    .pill.ok{ border-color: rgba(124,255,199,.22); background: rgba(124,255,199,.08); color: #d6fff0; }
+    .pill.warn{ border-color: rgba(255,211,106,.22); background: rgba(255,211,106,.08); color: #fff2d0; }
+    .pill.bad{ border-color: rgba(255,106,106,.22); background: rgba(255,106,106,.08); color: #ffd6d6; }
+
+    .list{
+      display:flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .group{
+      padding: 14px 16px;
+    }
+    .groupHead{
+      display:flex;
+      justify-content: space-between;
+      align-items:flex-start;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .titleLine{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .gtitle{
+      font-size: 16px;
+      font-weight: 850;
+      letter-spacing: .2px;
+    }
+    .meta{
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items:center;
+    }
+    .actions{
+      display:flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+
+    details{
+      margin-top: 10px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 10px;
+    }
+    summary{
+      cursor: pointer;
+      color: var(--muted);
+      font-weight: 700;
+      list-style: none;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    .detailGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .box{
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+    }
+    .box h3{ margin:0 0 6px; font-size: 14px; }
+    .box p{ margin:0; color: var(--muted); font-size: 13px; }
+    .link{
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .chat{
+      display:flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .chatLog{
+      max-height: 170px;
+      overflow:auto;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      padding: 10px;
+    }
+    .msg{
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .msg b{ color: var(--text); }
+    .toast{
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 18px;
+      background: rgba(16,24,39,.92);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      z-index: 50;
+      display:none;
+      max-width: min(720px, 92vw);
+    }
+
+    footer{
+      margin-top: 18px;
+      padding: 18px 0 34px;
+      border-top: 1px solid rgba(34,48,74,.65);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+      nav{ display:none; }
+      .detailGrid{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="dot"></div>
+        <div>Plateforme Sport • Brébeuf</div>
+      </div>
+      <nav>
+        <a href="index.html">Accueil</a>
+        <a href="horaires.html">Horaires</a>
+        <a href="groupes.html">Groupes</a>
+      </nav>
+      <a class="btn" href="index.html">← Retour</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="card">
+      <div class="top">
+        <div>
+          <h1>Rejoindre un groupe</h1>
+          <div class="sub">
+            Trouve un groupe (filtre + recherche), rejoins en 1 clic, ou crée le tien.
+            Inclus : <b>liste d’attente</b>, <b>coût par personne</b>, <b>confirmation</b> (quand assez de participants), mini <b>chat</b> et <b>partage</b>.
+          </div>
+        </div>
+        <div class="row" style="align-items:flex-start;">
+          <div style="min-width:280px">
+            <div class="hint" style="margin-bottom:6px;">Ton prénom (affiché dans les groupes)</div>
+            <input id="displayName" class="input" placeholder="Ex. Zhiheng" />
+            <div class="row" style="margin-top:8px;">
+              <label class="pill" style="cursor:pointer;">
+                <input id="reminders" type="checkbox" style="accent-color: var(--accent);">
+                Activer “rappels”
+              </label>
+              <span class="pill ok" id="reliability">Fiabilité: 100</span>
+            </div>
+          </div>
+          <a class="btn primary" href="index.html#contact">Liste d’attente</a>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="row">
+          <input id="q" class="input" placeholder="Rechercher (ex. tennis, BdeB, jeudi, 18h, gratuit…)" />
+          <select id="sport">
+            <option value="">Sport (tous)</option>
+            <option>Basket</option>
+            <option>Volley</option>
+            <option>Badminton</option>
+            <option>Tennis</option>
+            <option>Pickleball</option>
+            <option>Patinage</option>
+            <option>Hockey</option>
+            <option>Multi</option>
+          </select>
+          <select id="niveau">
+            <option value="">Niveau (tous)</option>
+            <option>Débutant</option>
+            <option>Intermédiaire</option>
+            <option>Avancé</option>
+            <option>Mixte</option>
+          </select>
+          <select id="statut">
+            <option value="">Statut (tous)</option>
+            <option value="open">Ouvert</option>
+            <option value="full">Complet</option>
+            <option value="confirmed">Confirmé</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <select id="lieu">
+            <option value="">Lieu (tous)</option>
+            <option>BdeB</option>
+            <option>Claude-Robillard</option>
+            <option>Aréna Bill-Durnan</option>
+            <option>Aréna Michel-Normandin</option>
+            <option>Aréna Mont-Royal</option>
+            <option>Parc Martin-Luther-King</option>
+            <option>Parc Warren-Allmand</option>
+            <option>Centre Saint-Denis</option>
+          </select>
+
+          <select id="jour">
+            <option value="">Jour (tous)</option>
+            <option>Lundi</option><option>Mardi</option><option>Mercredi</option><option>Jeudi</option>
+            <option>Vendredi</option><option>Samedi</option><option>Dimanche</option>
+          </select>
+
+          <select id="prix">
+            <option value="">Prix/pers (tous)</option>
+            <option value="0-5">0–5$</option>
+            <option value="5-10">5–10$</option>
+            <option value="10-20">10–20$</option>
+            <option value="20-999">20$+</option>
+          </select>
+
+          <button class="btn small" id="reset">Reset filtres</button>
+          <button class="btn small danger" id="wipe">Effacer démo</button>
+        </div>
+
+        <div class="hint">
+          💡 Astuce MVP : “Confirmé” = quand le groupe atteint le seuil (ex. 70% des places).
+          “Rappels” ici est simulé (UI + stockage), sans notifications push.
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- LIST -->
+      <section>
+        <div class="card" style="padding:14px 16px; margin-bottom:12px;">
+          <div class="row" style="justify-content:space-between;">
+            <div>
+              <div class="gtitle">Groupes disponibles</div>
+              <div class="hint" id="count"></div>
+            </div>
+            <div class="row">
+              <span class="pill ok">Ouvert</span>
+              <span class="pill warn">Complet / attente</span>
+              <span class="pill">Confirmé</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="list" id="groups"></div>
+      </section>
+
+      <!-- CREATE + MY GROUPS -->
+      <aside class="card" style="padding:14px 16px;">
+        <div class="gtitle">Créer un groupe</div>
+        <div class="hint" style="margin-top:6px;">
+          Crée une activité : coût total → calcul automatique du coût/pers. Les autres rejoignent et l’activité devient “confirmée”.
+        </div>
+
+        <div class="row" style="margin-top:12px;">
+          <input class="input" id="title" placeholder="Titre (ex. Badminton jeudi 18h)" />
+        </div>
+
+        <div class="row">
+          <select id="cSport">
+            <option>Badminton</option><option>Basket</option><option>Volley</option><option>Tennis</option>
+            <option>Pickleball</option><option>Patinage</option><option>Hockey</option><option>Multi</option>
+          </select>
+          <select id="cNiveau">
+            <option>Débutant</option><option>Intermédiaire</option><option>Avancé</option><option>Mixte</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <select id="cLieu">
+            <option>BdeB</option>
+            <option>Claude-Robillard</option>
+            <option>Centre Saint-Denis</option>
+            <option>Aréna Bill-Durnan</option>
+            <option>Parc Martin-Luther-King</option>
+            <option>Parc Warren-Allmand</option>
+            <option>Aréna Mont-Royal</option>
+            <option>Aréna Michel-Normandin</option>
+          </select>
+          <select id="cJour">
+            <option>Lundi</option><option>Mardi</option><option>Mercredi</option><option>Jeudi</option>
+            <option>Vendredi</option><option>Samedi</option><option>Dimanche</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <input class="input" id="cHeure" placeholder="Heure (ex. 18:00)" />
+          <input class="input" id="cDuree" placeholder="Durée (h) (ex. 1.5)" />
+        </div>
+
+        <div class="row">
+          <input class="input" id="cPlaces" placeholder="Places max (ex. 10)" />
+          <input class="input" id="cCost" placeholder="Coût total (ex. 60)" />
+        </div>
+
+        <div class="row">
+          <input class="input" id="cFee" placeholder="Frais plateforme / pers (ex. 1.00)" />
+        </div>
+
+        <div class="row">
+          <textarea id="cNotes" placeholder="Notes (niveau, équipement, règles, point de rencontre...)"></textarea>
+        </div>
+
+        <div class="row" style="justify-content:space-between;">
+          <button class="btn warn" id="create">✨ Créer le groupe</button>
+          <button class="btn small" id="seed">Ajouter démos</button>
+        </div>
+
+        <div style="margin-top:16px; border-top:1px solid rgba(255,255,255,.08); padding-top:14px;">
+          <div class="gtitle">Mes groupes</div>
+          <div class="hint" style="margin-top:6px;">Gérés localement (MVP sans serveur).</div>
+          <div id="myGroups" style="margin-top:10px; display:flex; flex-direction:column; gap:10px;"></div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      <div>⚙️ MVP technique : tout est local (localStorage). Pour une vraie plateforme, il faudra un backend (auth, paiements, notifications).</div>
+    </footer>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // -------------------------
+    // Storage helpers
+    // -------------------------
+    const KEY = "brebeuf_groups_v1";
+    const USERKEY = "brebeuf_user_v1";
+    const REMKEY = "brebeuf_reminders_v1";
+    const RELKEY = "brebeuf_reliability_v1"; // { noShow: number }
+
+    const $ = (id) => document.getElementById(id);
+
+    function loadGroups(){
+      try { return JSON.parse(localStorage.getItem(KEY) || "[]"); }
+      catch { return []; }
+    }
+    function saveGroups(groups){
+      localStorage.setItem(KEY, JSON.stringify(groups));
+    }
+    function loadUser(){
+      try { return JSON.parse(localStorage.getItem(USERKEY) || "{}"); }
+      catch { return {}; }
+    }
+    function saveUser(u){
+      localStorage.setItem(USERKEY, JSON.stringify(u));
+    }
+    function loadReliability(){
+      try { return JSON.parse(localStorage.getItem(RELKEY) || '{"noShow":0}'); }
+      catch { return { noShow: 0 }; }
+    }
+    function saveReliability(r){
+      localStorage.setItem(RELKEY, JSON.stringify(r));
+    }
+
+    function uid(){
+      return Math.random().toString(16).slice(2) + Date.now().toString(16);
+    }
+
+    // -------------------------
+    // UI helpers
+    // -------------------------
+    let toastTimer = null;
+    function toast(msg){
+      const t = $("toast");
+      t.textContent = msg;
+      t.style.display = "block";
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.style.display = "none", 2400);
+    }
+
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function money(n){
+      const x = Number(n);
+      if(!isFinite(x)) return "—";
+      return x.toFixed(2) + " $";
+    }
+
+    function calcPerPerson(totalCost, feePerPerson, max){
+      const t = Number(totalCost), f = Number(feePerPerson), m = Number(max);
+      if(!isFinite(t) || !isFinite(f) || !isFinite(m) || m <= 0) return null;
+      return (t / m) + f;
+    }
+
+    function statusOf(g){
+      const max = g.max || 0;
+      const joined = (g.participants || []).length;
+      const threshold = Math.max(2, Math.ceil(max * (g.confirmThreshold ?? 0.7)));
+      const confirmed = joined >= threshold;
+      const full = joined >= max;
+      return { confirmed, full, joined, max, threshold };
+    }
+
+    // -------------------------
+    // Seed demo data
+    // -------------------------
+    function seedIfEmpty(){
+      const groups = loadGroups();
+      if(groups.length) return;
+      const demo = [
+        {
+          id: uid(),
+          title: "Badminton jeudi 18h (Claude-Robillard)",
+          sport: "Badminton",
+          niveau: "Intermédiaire",
+          lieu: "Claude-Robillard",
+          jour: "Jeudi",
+          heure: "18:00",
+          dureeH: 1.0,
+          max: 8,
+          costTotal: 27,
+          feePerPerson: 1.00,
+          confirmThreshold: 0.7,
+          notes: "Raquettes requises. On se retrouve 10 min avant. rM/nrM selon votre statut.",
+          source: "https://montreal.ca/lieux/gymnase-double-du-complexe-sportif-claude-robillard",
+          owner: "Admin",
+          participants: ["Admin", "Kaeli"],
+          waitlist: ["Jake"],
+          chat: [
+            { by: "Admin", text: "Salut! Dites votre niveau et si vous avez une raquette.", ts: Date.now()-600000 }
+          ],
+          createdAt: Date.now()-7200000
+        },
+        {
+          id: uid(),
+          title: "Tennis samedi 14h (Parc Martin-Luther-King)",
+          sport: "Tennis",
+          niveau: "Mixte",
+          lieu: "Parc Martin-Luther-King",
+          jour: "Samedi",
+          heure: "14:00",
+          dureeH: 1.0,
+          max: 4,
+          costTotal: 12,
+          feePerPerson: 0.50,
+          confirmThreshold: 0.75,
+          notes: "Si gratuit sur certaines périodes, on ajuste le coût à 0.",
+          source: "https://montreal.ca/lieux/terrains-de-tennis-et-de-pickleball-du-parc-martin-luther-king",
+          owner: "Admin",
+          participants: ["Admin"],
+          waitlist: [],
+          chat: [],
+          createdAt: Date.now()-3600000
+        },
+        {
+          id: uid(),
+          title: "Gym multi mardi 19h (BdeB)",
+          sport: "Multi",
+          niveau: "Mixte",
+          lieu: "BdeB",
+          jour: "Mardi",
+          heure: "19:00",
+          dureeH: 1.5,
+          max: 10,
+          costTotal: 62.70,
+          feePerPerson: 1.00,
+          confirmThreshold: 0.7,
+          notes: "Objectif: former 2 équipes + mini match. Apportez des chaussures propres.",
+          source: "https://complexesportif.bdeb.qc.ca/plateaux-sportifs-interieurs",
+          owner: "Admin",
+          participants: ["Admin","Lashwana","Zhiheng","Jake","Kaeli","Amina","Sam"],
+          waitlist: [],
+          chat: [],
+          createdAt: Date.now()-5200000
+        }
+      ];
+      saveGroups(demo);
+    }
+
+    // -------------------------
+    // Render
+    // -------------------------
+    function render(){
+      const groups = loadGroups();
+      const user = loadUser();
+      const name = (user.name || "").trim();
+
+      // Filters
+      const q = $("q").value.trim().toLowerCase();
+      const fSport = $("sport").value;
+      const fNiv = $("niveau").value;
+      const fLieu = $("lieu").value;
+      const fJour = $("jour").value;
+      const fStatut = $("statut").value;
+      const fPrix = $("prix").value;
+
+      const filtered = groups.filter(g => {
+        const blob = `${g.title} ${g.sport} ${g.niveau} ${g.lieu} ${g.jour} ${g.heure} ${g.notes} ${g.source}`.toLowerCase();
+        if(q && !blob.includes(q)) return false;
+        if(fSport && g.sport !== fSport) return false;
+        if(fNiv && g.niveau !== fNiv) return false;
+        if(fLieu && g.lieu !== fLieu) return false;
+        if(fJour && g.jour !== fJour) return false;
+
+        // price per person filter
+        const per = calcPerPerson(g.costTotal, g.feePerPerson, g.max);
+        if(fPrix && per != null){
+          const [a,b] = fPrix.split("-").map(Number);
+          if(!(per >= a && per < b)) return false;
+        } else if (fPrix) {
+          return false;
+        }
+
+        // status filter
+        const st = statusOf(g);
+        if(fStatut === "open" && (st.full || st.confirmed && st.full)) return st.joined < st.max;
+        if(fStatut === "full" && !st.full) return false;
+        if(fStatut === "confirmed" && !st.confirmed) return false;
+
+        return true;
+      });
+
+      $("count").textContent = `${filtered.length} groupe(s) affiché(s) • ${groups.length} total`;
+
+      // My groups
+      renderMyGroups(groups, name);
+
+      // List render
+      const container = $("groups");
+      container.innerHTML = filtered.length ? "" : `
+        <div class="card group">
+          <div class="gtitle">Aucun groupe trouvé</div>
+          <div class="hint" style="margin-top:6px;">Essaie un autre filtre, ou crée un groupe à droite.</div>
+        </div>
+      `;
+
+      for(const g of filtered){
+        const st = statusOf(g);
+        const per = calcPerPerson(g.costTotal, g.feePerPerson, g.max);
+        const isIn = name && (g.participants || []).includes(name);
+        const isWait = name && (g.waitlist || []).includes(name);
+
+        let statusPill = `<span class="pill ok">Ouvert</span>`;
+        if(st.full) statusPill = `<span class="pill warn">Complet</span>`;
+        if(st.confirmed) statusPill = `<span class="pill">Confirmé</span>`;
+
+        const canJoin = !!name && !isIn && !isWait;
+        const joinBtn = !name
+          ? `<span class="pill bad">Entre ton prénom pour rejoindre</span>`
+          : isIn
+            ? `<button class="btn small danger" data-act="leave" data-id="${g.id}">Quitter</button>`
+            : (st.full
+                ? `<button class="btn small warn" data-act="wait" data-id="${g.id}">${isWait ? "Quitter attente" : "Liste d’attente"}</button>`
+                : `<button class="btn small primary" data-act="join" data-id="${g.id}">Rejoindre</button>`);
+
+        const shareText = `Groupe: ${g.title} | ${g.jour} ${g.heure} | Lieu: ${g.lieu} | Sport: ${g.sport} | Niveau: ${g.niveau}`;
+
+        const sourceLink = g.source
+          ? `<a class="link" href="${escapeHtml(g.source)}" target="_blank" rel="noopener">Source</a>`
+          : `<span style="color:rgba(183,196,221,.7)">—</span>`;
+
+        const html = `
+          <div class="card group">
+            <div class="groupHead">
+              <div>
+                <div class="titleLine">
+                  <span class="gtitle">${escapeHtml(g.title || `${g.sport} ${g.jour} ${g.heure}`)}</span>
+                  ${statusPill}
+                  <span class="pill">${escapeHtml(g.sport)}</span>
+                  <span class="pill">${escapeHtml(g.niveau)}</span>
+                  <span class="pill">${escapeHtml(g.lieu)}</span>
+                </div>
+                <div class="meta">
+                  <span>🗓️ ${escapeHtml(g.jour)} • 🕒 ${escapeHtml(g.heure)} • ⏱️ ${escapeHtml(g.dureeH)}h</span>
+                  <span>👥 ${st.joined}/${st.max} (confirmé à ${st.threshold})</span>
+                  <span>💰 ${per == null ? "—" : money(per)} / pers</span>
+                  <span>🔗 ${sourceLink}</span>
+                </div>
+              </div>
+
+              <div class="actions">
+                ${joinBtn}
+                <button class="btn small" data-act="share" data-id="${g.id}">Partager</button>
+              </div>
+            </div>
+
+            <details>
+              <summary>Voir détails + chat</summary>
+
+              <div class="detailGrid">
+                <div class="box">
+                  <h3>Notes / règles</h3>
+                  <p>${escapeHtml(g.notes || "—")}</p>
+                  <p style="margin-top:8px;">
+                    <span class="pill">Organisateur: ${escapeHtml(g.owner || "—")}</span>
+                    <span class="pill">Coût total: ${money(g.costTotal)} • Frais/pers: ${money(g.feePerPerson)}</span>
+                  </p>
+                </div>
+
+                <div class="box">
+                  <h3>Participants</h3>
+                  <p>
+                    ${escapeHtml((g.participants || []).join(", ") || "—")}
+                  </p>
+                  <p style="margin-top:8px;">
+                    <span class="pill warn">Attente: ${escapeHtml((g.waitlist || []).join(", ") || "—")}</span>
+                  </p>
+                </div>
+              </div>
+
+              <div class="box" style="margin-top:12px;">
+                <h3>Chat (mini)</h3>
+                <div class="chat">
+                  <div class="chatLog" id="log-${g.id}">
+                    ${renderChat(g.chat || [])}
+                  </div>
+                  <div class="row">
+                    <input class="input" id="msg-${g.id}" placeholder="Écrire un message…" />
+                    <button class="btn small" data-act="send" data-id="${g.id}">Envoyer</button>
+                  </div>
+                  <div class="hint">MVP : chat local (pour démo). En vrai : serveur + comptes.</div>
+                </div>
+              </div>
+
+              <div class="box" style="margin-top:12px;">
+                <h3>Partage (copie)</h3>
+                <p class="hint" style="margin-bottom:10px;">Copie ce texte pour Instagram/DM :</p>
+                <div class="row">
+                  <input class="input" value="${escapeHtml(shareText)}" readonly />
+                  <button class="btn small" data-act="copy" data-text="${escapeHtml(shareText)}">Copier</button>
+                </div>
+              </div>
+
+            </details>
+          </div>
+        `;
+        container.insertAdjacentHTML("beforeend", html);
+      }
+    }
+
+    function renderChat(chat){
+      if(!chat.length) return `<p class="msg">Aucun message.</p>`;
+      return chat.slice(-40).map(m => {
+        const when = new Date(m.ts || Date.now()).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
+        return `<p class="msg"><b>${escapeHtml(m.by || "?" )}</b> <span style="opacity:.7">(${when})</span> : ${escapeHtml(m.text || "")}</p>`;
+      }).join("");
+    }
+
+    function renderMyGroups(groups, name){
+      const box = $("myGroups");
+      if(!name){
+        box.innerHTML = `<div class="hint">Entre ton prénom pour voir tes groupes.</div>`;
+        return;
+      }
+      const mine = groups.filter(g => (g.participants || []).includes(name) || (g.waitlist || []).includes(name));
+      if(!mine.length){
+        box.innerHTML = `<div class="hint">Aucun groupe rejoint pour l’instant.</div>`;
+        return;
+      }
+      box.innerHTML = mine.map(g => {
+        const st = statusOf(g);
+        const tag = (g.participants || []).includes(name) ? "Participant" : "Attente";
+        const pill = tag === "Participant" ? "ok" : "warn";
+        return `
+          <div class="box">
+            <div style="display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap;">
+              <div>
+                <div style="font-weight:850;">${escapeHtml(g.title)}</div>
+                <div class="hint">${escapeHtml(g.jour)} ${escapeHtml(g.heure)} • ${escapeHtml(g.lieu)} • ${st.joined}/${st.max}</div>
+              </div>
+              <span class="pill ${pill}">${tag}</span>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // -------------------------
+    // Actions
+    // -------------------------
+    function getName(){
+      const u = loadUser();
+      return (u.name || "").trim();
+    }
+
+    function joinGroup(id){
+      const name = getName();
+      if(!name) return toast("Entre ton prénom d’abord.");
+      const groups = loadGroups();
+      const g = groups.find(x => x.id === id);
+      if(!g) return;
+
+      g.participants = g.participants || [];
+      g.waitlist = g.waitlist || [];
+
+      if(g.participants.includes(name)) return toast("Tu es déjà dans ce groupe.");
+      if(g.waitlist.includes(name)) return toast("Tu es déjà en liste d’attente.");
+
+      const st = statusOf(g);
+      if(st.full){
+        g.waitlist.push(name);
+        saveGroups(groups);
+        toast("Groupe complet → ajouté à la liste d’attente.");
+        render();
+        return;
+      }
+
+      g.participants.push(name);
+      saveGroups(groups);
+      toast("✅ Rejoint !");
+
+      // auto-confirm message
+      const st2 = statusOf(g);
+      if(st2.confirmed){
+        g.chat = g.chat || [];
+        g.chat.push({ by: "Système", text: "🎉 Groupe confirmé !", ts: Date.now() });
+        saveGroups(groups);
+      }
+      render();
+    }
+
+    function toggleWait(id){
+      const name = getName();
+      if(!name) return toast("Entre ton prénom d’abord.");
+      const groups = loadGroups();
+      const g = groups.find(x => x.id === id);
+      if(!g) return;
+
+      g.waitlist = g.waitlist || [];
+      const i = g.waitlist.indexOf(name);
+      if(i >= 0){
+        g.waitlist.splice(i,1);
+        saveGroups(groups);
+        toast("Retiré de la liste d’attente.");
+        render();
+        return;
+      }
+      g.waitlist.push(name);
+      saveGroups(groups);
+      toast("Ajouté à la liste d’attente.");
+      render();
+    }
+
+    function leaveGroup(id){
+      const name = getName();
+      if(!name) return toast("Entre ton prénom d’abord.");
+      const groups = loadGroups();
+      const g = groups.find(x => x.id === id);
+      if(!g) return;
+
+      g.participants = g.participants || [];
+      g.waitlist = g.waitlist || [];
+
+      const wasIn = g.participants.includes(name);
+      g.participants = g.participants.filter(p => p !== name);
+      g.waitlist = g.waitlist.filter(p => p !== name);
+
+      // promote from waitlist if slot open
+      const st = statusOf(g);
+      if(!st.full && g.waitlist.length > 0){
+        const next = g.waitlist.shift();
+        g.participants.push(next);
+        g.chat = g.chat || [];
+        g.chat.push({ by: "Système", text: `✅ ${next} a été ajouté du waitlist (place libérée).`, ts: Date.now() });
+        toast(`Tu as quitté. ${next} est entré depuis l’attente.`);
+      } else {
+        toast(wasIn ? "Tu as quitté le groupe." : "Retiré.");
+      }
+
+      saveGroups(groups);
+      render();
+    }
+
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        toast("Copié ✅");
+      } catch {
+        toast("Copie impossible (browser).");
+      }
+    }
+
+    function sendMessage(id){
+      const name = getName();
+      if(!name) return toast("Entre ton prénom d’abord.");
+      const input = $("msg-" + id);
+      if(!input) return;
+      const text = input.value.trim();
+      if(!text) return;
+
+      const groups = loadGroups();
+      const g = groups.find(x => x.id === id);
+      if(!g) return;
+
+      g.chat = g.chat || [];
+      g.chat.push({ by: name, text, ts: Date.now() });
+      saveGroups(groups);
+      input.value = "";
+      render();
+      // keep details open? (simple)
+      toast("Message envoyé.");
+    }
+
+    function shareGroup(id){
+      const groups = loadGroups();
+      const g = groups.find(x => x.id === id);
+      if(!g) return;
+      const text = `Groupe: ${g.title} | ${g.jour} ${g.heure} | Lieu: ${g.lieu} | Sport: ${g.sport} | Niveau: ${g.niveau}`;
+      copyText(text);
+    }
+
+    function resetFilters(){
+      $("q").value = "";
+      $("sport").value = "";
+      $("niveau").value = "";
+      $("lieu").value = "";
+      $("jour").value = "";
+      $("statut").value = "";
+      $("prix").value = "";
+      render();
+    }
+
+    function wipeDemo(){
+      localStorage.removeItem(KEY);
+      toast("Données démo effacées.");
+      render();
+    }
+
+    function createGroup(){
+      const name = getName();
+      if(!name) return toast("Entre ton prénom d’abord.");
+
+      const title = $("title").value.trim();
+      const sport = $("cSport").value;
+      const niveau = $("cNiveau").value;
+      const lieu = $("cLieu").value;
+      const jour = $("cJour").value;
+      const heure = $("cHeure").value.trim() || "18:00";
+      const dureeH = Number($("cDuree").value || 1);
+      const max = Number($("cPlaces").value || 10);
+      const costTotal = Number($("cCost").value || 0);
+      const feePerPerson = Number($("cFee").value || 0);
+      const notes = $("cNotes").value.trim();
+
+      if(!max || max < 2) return toast("Places max doit être ≥ 2.");
+      if(!isFinite(costTotal)) return toast("Coût total invalide.");
+      if(!isFinite(feePerPerson)) return toast("Frais/pers invalide.");
+
+      const g = {
+        id: uid(),
+        title: title || `${sport} ${jour} ${heure} (${lieu})`,
+        sport, niveau, lieu, jour, heure,
+        dureeH: isFinite(dureeH) ? dureeH : 1,
+        max,
+        costTotal,
+        feePerPerson,
+        confirmThreshold: 0.7,
+        notes,
+        source: "",
+        owner: name,
+        participants: [name],
+        waitlist: [],
+        chat: [{ by: "Système", text: "Groupe créé ✅. Partage-le pour attirer des joueurs.", ts: Date.now() }],
+        createdAt: Date.now()
+      };
+
+      const groups = loadGroups();
+      groups.unshift(g);
+      saveGroups(groups);
+
+      // clear form
+      $("title").value = "";
+      $("cHeure").value = "";
+      $("cDuree").value = "";
+      $("cPlaces").value = "";
+      $("cCost").value = "";
+      $("cFee").value = "";
+      $("cNotes").value = "";
+
+      toast("✨ Groupe créé !");
+      render();
+    }
+
+    // -------------------------
+    // Init
+    // -------------------------
+    function syncUserUI(){
+      const u = loadUser();
+      $("displayName").value = u.name || "";
+      const rem = localStorage.getItem(REMKEY) === "1";
+      $("reminders").checked = rem;
+
+      const rel = loadReliability();
+      const score = Math.max(0, 100 - (rel.noShow || 0) * 20);
+      $("reliability").textContent = "Fiabilité: " + score;
+    }
+
+    function init(){
+      seedIfEmpty();
+      syncUserUI();
+      render();
+
+      // inputs -> render
+      ["q","sport","niveau","lieu","jour","statut","prix"].forEach(id => {
+        $(id).addEventListener("input", render);
+        $(id).addEventListener("change", render);
+      });
+
+      $("reset").addEventListener("click", resetFilters);
+      $("wipe").addEventListener("click", wipeDemo);
+
+      $("displayName").addEventListener("input", (e) => {
+        const u = loadUser();
+        u.name = e.target.value;
+        saveUser(u);
+        render();
+      });
+
+      $("reminders").addEventListener("change", (e) => {
+        localStorage.setItem(REMKEY, e.target.checked ? "1" : "0");
+        toast(e.target.checked ? "Rappels activés (MVP)." : "Rappels désactivés.");
+      });
+
+      $("create").addEventListener("click", createGroup);
+      $("seed").addEventListener("click", () => {
+        localStorage.removeItem(KEY);
+        seedIfEmpty();
+        toast("Données démo ajoutées.");
+        render();
+      });
+
+      // delegated actions
+      document.addEventListener("click", (e) => {
+        const el = e.target.closest("[data-act]");
+        if(!el) return;
+        const act = el.getAttribute("data-act");
+        const id = el.getAttribute("data-id");
+
+        if(act === "join") joinGroup(id);
+        if(act === "leave") leaveGroup(id);
+        if(act === "wait") toggleWait(id);
+        if(act === "send") sendMessage(id);
+        if(act === "share") shareGroup(id);
+        if(act === "copy") copyText(el.getAttribute("data-text") || "");
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>
