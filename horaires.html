@@ -152,7 +152,32 @@
     }
   </style>
 </head>
+<script>
+  // Fade-in au chargement
+  window.addEventListener("DOMContentLoaded", () => {
+    document.body.classList.add("loaded");
+  });
 
+  // Fade-out quand on clique un lien interne
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("a");
+    if(!a) return;
+
+    const href = a.getAttribute("href") || "";
+
+    // ignore ancres (#), liens externes, new tab
+    if(href.startsWith("#")) return;
+    if(a.target === "_blank") return;
+    if(href.startsWith("http")) return;
+    if(href.startsWith("mailto:") || href.startsWith("tel:")) return;
+
+    e.preventDefault();
+    document.body.classList.add("leaving");
+    setTimeout(() => { window.location.href = href; }, 220);
+  });
+</script>
+
+  
 <body>
   <header>
     <div class="wrap nav">
@@ -322,5 +347,6 @@
   </script>
 </body>
 </html>
+
 
 
