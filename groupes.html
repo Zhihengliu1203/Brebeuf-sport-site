@@ -135,6 +135,15 @@
 
     /* Inputs + selects */
     .input, select, textarea{
+        /* Smooth pop (anti-flash) */
+  transition:
+    background-color .18s cubic-bezier(.2,.9,.2,1),
+    border-color .18s cubic-bezier(.2,.9,.2,1),
+    box-shadow .18s cubic-bezier(.2,.9,.2,1),
+    transform .14s cubic-bezier(.2,.9,.2,1);
+  will-change: transform, box-shadow;
+  transform: translateZ(0);
+
       flex: 1 1 220px;
       padding: 12px 12px;
       border-radius: 12px;
@@ -178,6 +187,30 @@
       color: var(--option-text);
       font-weight: 700;
     }
+    /* Hover léger (pas de flash) */
+.input:hover, select:hover, textarea:hover{
+  background: rgba(255,255,255,.08);
+}
+
+/* Pop smooth au clic/focus */
+.input:focus, select:focus, textarea:focus{
+  background: rgba(255,255,255,.10);
+  border-color: rgba(106,169,255,.65);
+  box-shadow: 0 0 0 4px rgba(106,169,255,.18);
+  transform: translateY(-1px) scale(1.012);
+}
+
+/* Petit retour quand tu maintiens le clic */
+.input:active, select:active, textarea:active{
+  transform: translateY(0px) scale(1.006);
+}
+
+/* Mobile: évite le flash bleu de tap */
+*{ -webkit-tap-highlight-color: transparent; }
+
+@media (prefers-reduced-motion: reduce){
+  .input, select, textarea{ transition: none; }
+}
 
     textarea{ min-height: 90px; resize: vertical; }
     .hint{ color: var(--muted); font-size: 13px; }
