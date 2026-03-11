@@ -109,24 +109,38 @@ section[id]{
       z-index: 20;
     }
     .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      gap: 16px;
-    }
+  display:grid;
+  grid-template-columns: auto 1fr auto;
+  align-items:center;
+  gap: 18px;
+}
     .brand{
       display:flex; align-items:center; gap:10px; font-weight:700;
       letter-spacing:.2px;
     }
+    header .btn.header-cta{
+  align-self: center;
+}
     .dot{
       width:12px; height:12px; border-radius:999px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       box-shadow: 0 0 0 4px rgba(106,169,255,.12);
     }
     nav{
-      display:flex; gap:14px; flex-wrap:wrap; align-items:center;
-      color: var(--muted);
-      font-size: 14px;
-    }
-    nav a{ padding:8px 10px; border-radius:999px; }
+  display:flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  align-items:center;
+  justify-content:center;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+nav a{
+  padding: 8px 10px;
+  border-radius:999px;
+  white-space: nowrap;
+}
     nav a:hover{ background: rgba(255,255,255,.06); color: var(--text); }
     .btn{
   display:inline-flex;
@@ -169,6 +183,19 @@ section[id]{
 .btn.primary:hover{
   filter: brightness(1.04);
   box-shadow: 0 18px 34px rgba(106,169,255,.24);
+}
+.header-cta{
+  min-width: 250px;
+  min-height: 86px;
+  padding: 18px 28px;
+  font-size: 18px;
+  font-weight: 800;
+  text-align: center;
+  white-space: normal;
+  line-height: 1.15;
+  box-shadow:
+    0 18px 38px rgba(106,169,255,.20),
+    0 0 36px rgba(124,255,199,.10);
 }
 
 .btn.primary:active{
@@ -538,6 +565,7 @@ body.leaving{ opacity: 0; }
 </script>
 </body>
 </html>
+
 
 
 
